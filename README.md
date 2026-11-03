@@ -276,3 +276,6 @@ c文件中提取所有汉字：可以使用工程下的`Script/get_font.py`脚�
 * 强制门户认证 https://blog.csdn.net/xh870189248/article/details/102892766
 * 感谢`lib`目录下所用到的开源库相关的作者
 
+## 硬件设计与制作资料
+
+原始 HoloCubic 的原理图、PCB、外壳模型及芯片手册已整合到 [硬件资料目录](Hardware/Original_HoloCubic/README.md)。请先查看其中的版本适配说明，再选用设计文件制作。

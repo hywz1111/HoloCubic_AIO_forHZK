@@ -1,0 +1,251 @@
+{
+  "repository": "hywz1111/HoloCubic",
+  "commit": "5e00a57bd6afbf6e22fc25291095082656eaf3a4",
+  "files": [
+    {
+      "path": "1.Hardware/Ironman Version/HoloCubic-Assembled/ExtendBoard/ExtendBoard.PcbDoc",
+      "size": 1815552,
+      "git_blob_sha1": "83f0f936a0e0e5055f0c697a16a25e641ec6cee0"
+    },
+    {
+      "path": "1.Hardware/Ironman Version/HoloCubic-Assembled/ExtendBoard/ExtendBoard.PrjPCB",
+      "size": 43744,
+      "git_blob_sha1": "92e331f16e8d42baa9f96742f4d05e8d00c739ca"
+    },
+    {
+      "path": "1.Hardware/Ironman Version/HoloCubic-Assembled/ExtendBoard/ExtendBoard.PrjPCBStructure",
+      "size": 59,
+      "git_blob_sha1": "2cfe34f9954d8d4b93b3ca6c1ba838c450e64d84"
+    },
+    {
+      "path": "1.Hardware/Ironman Version/HoloCubic-Assembled/ExtendBoard/Main.SchDoc",
+      "size": 15872,
+      "git_blob_sha1": "0a62f7c1be97499bf2a44d6aa8b91bde5e6634f0"
+    },
+    {
+      "path": "1.Hardware/Ironman Version/HoloCubic-Assembled/ExtendBoard/__Previews/Main.SchDocPreview",
+      "size": 65087,
+      "git_blob_sha1": "f444a7e619ed345fce436632f9549eda7d27cd39"
+    },
+    {
+      "path": "1.Hardware/Ironman Version/HoloCubic-Assembled/HoloCubic-Assembled.PrjMbd",
+      "size": 33004,
+      "git_blob_sha1": "aed461829f5948bb902e00a66a69735023346d91"
+    },
+    {
+      "path": "1.Hardware/Ironman Version/HoloCubic-Assembled/HoloCubic.MbaDoc",
+      "size": 6823628,
+      "git_blob_sha1": "e2e635a39a61fbeedc86bfa79f49e23401a0ee73"
+    },
+    {
+      "path": "1.Hardware/Ironman Version/HoloCubic-Assembled/HoloCubic.MbsDoc",
+      "size": 5745,
+      "git_blob_sha1": "5a9b26bfb0adfab07e248854008f45a076de8c95"
+    },
+    {
+      "path": "1.Hardware/Ironman Version/HoloCubic-Assembled/MainBoard/Main.SchDoc",
+      "size": 209408,
+      "git_blob_sha1": "91d75ccbfa9ea1453dd81e8bdc85a752821eb99e"
+    },
+    {
+      "path": "1.Hardware/Ironman Version/HoloCubic-Assembled/MainBoard/MainBoard.PcbDoc",
+      "size": 3897856,
+      "git_blob_sha1": "2aaa49a083779b6a0deb202844dd3af1846cf3a1"
+    },
+    {
+      "path": "1.Hardware/Ironman Version/HoloCubic-Assembled/MainBoard/MainBoard.PrjPCB",
+      "size": 44208,
+      "git_blob_sha1": "c46cca5c216646cdc0994abbcf02b8daffc191f8"
+    },
+    {
+      "path": "1.Hardware/Ironman Version/HoloCubic-Assembled/MainBoard/MainBoard.PrjPCBStructure",
+      "size": 59,
+      "git_blob_sha1": "2cfe34f9954d8d4b93b3ca6c1ba838c450e64d84"
+    },
+    {
+      "path": "1.Hardware/Ironman Version/HoloCubic-Assembled/MainBoard/__Previews/Main.SchDocPreview",
+      "size": 218301,
+      "git_blob_sha1": "28d87354b72df2bc54c47eb2e90e28bd18cfef51"
+    },
+    {
+      "path": "1.Hardware/Naive Version/HoloCubic-Assembled/ExtendBoard/ExtendBoard.PcbDoc",
+      "size": 2088448,
+      "git_blob_sha1": "54ec34b53696d50d00f2f97efde7aa0037c413ee"
+    },
+    {
+      "path": "1.Hardware/Naive Version/HoloCubic-Assembled/ExtendBoard/ExtendBoard.PrjPCB",
+      "size": 43599,
+      "git_blob_sha1": "96281dcaa41fbde67bcd10602b3c67968176895b"
+    },
+    {
+      "path": "1.Hardware/Naive Version/HoloCubic-Assembled/ExtendBoard/ExtendBoard.PrjPCBStructure",
+      "size": 59,
+      "git_blob_sha1": "2cfe34f9954d8d4b93b3ca6c1ba838c450e64d84"
+    },
+    {
+      "path": "1.Hardware/Naive Version/HoloCubic-Assembled/ExtendBoard/Main.SchDoc",
+      "size": 32256,
+      "git_blob_sha1": "45463599c0d706b2807fb4c858f74937307691c5"
+    },
+    {
+      "path": "1.Hardware/Naive Version/HoloCubic-Assembled/HoloCubic-Assembled.PrjMbd",
+      "size": 33004,
+      "git_blob_sha1": "aed461829f5948bb902e00a66a69735023346d91"
+    },
+    {
+      "path": "1.Hardware/Naive Version/HoloCubic-Assembled/HoloCubic.MbaDoc",
+      "size": 6823628,
+      "git_blob_sha1": "e2e635a39a61fbeedc86bfa79f49e23401a0ee73"
+    },
+    {
+      "path": "1.Hardware/Naive Version/HoloCubic-Assembled/HoloCubic.MbsDoc",
+      "size": 5745,
+      "git_blob_sha1": "5a9b26bfb0adfab07e248854008f45a076de8c95"
+    },
+    {
+      "path": "1.Hardware/Naive Version/HoloCubic-Assembled/MainBoard/Main.SchDoc",
+      "size": 194048,
+      "git_blob_sha1": "b76c81957ca78eaae269d27a3544d8cca4bd7d41"
+    },
+    {
+      "path": "1.Hardware/Naive Version/HoloCubic-Assembled/MainBoard/MainBoard.PcbDoc",
+      "size": 3224576,
+      "git_blob_sha1": "55ea23789313e813a22dc380a61e8da95c10b757"
+    },
+    {
+      "path": "1.Hardware/Naive Version/HoloCubic-Assembled/MainBoard/MainBoard.PrjPCB",
+      "size": 46781,
+      "git_blob_sha1": "23a7b2d6379c531be1892f5a37227b104a872fa5"
+    },
+    {
+      "path": "1.Hardware/Naive Version/HoloCubic-Assembled/MainBoard/MainBoard.PrjPCBStructure",
+      "size": 59,
+      "git_blob_sha1": "2cfe34f9954d8d4b93b3ca6c1ba838c450e64d84"
+    },
+    {
+      "path": "4.3D Model/Bilibili Version/part1.stl",
+      "size": 23490127,
+      "git_blob_sha1": "845a372826397902db2496b581d362b676d22873"
+    },
+    {
+      "path": "4.3D Model/Bilibili Version/part2.stl",
+      "size": 362984,
+      "git_blob_sha1": "0f462a7ea789b86276163ae8b7494adabee6ad31"
+    },
+    {
+      "path": "4.3D Model/Bilibili Version/part3.stl",
+      "size": 22525348,
+      "git_blob_sha1": "f4f5c29fc16d5caba0a7e43dd3fc1442b92672b9"
+    },
+    {
+      "path": "4.3D Model/Ironman Version/part1.stl",
+      "size": 695284,
+      "git_blob_sha1": "ee1e8b7f234454df4ac05f47bd51bb28ed78e6d0"
+    },
+    {
+      "path": "4.3D Model/Ironman Version/part2.stl",
+      "size": 1085884,
+      "git_blob_sha1": "e1fdbebdd1b0f42abc32695eb624e823e9a3c742"
+    },
+    {
+      "path": "4.3D Model/Ironman Version/part3.stl",
+      "size": 669884,
+      "git_blob_sha1": "e0ea45f037789e0dcfaedad4b82a7fa641c040e2"
+    },
+    {
+      "path": "4.3D Model/Metal Version/holo.3dm",
+      "size": 20151264,
+      "git_blob_sha1": "4c9a2a9781b7e8210199e90e6b3dc5674b1ea505"
+    },
+    {
+      "path": "4.3D Model/Metal Version/holocubic1.jpg",
+      "size": 443081,
+      "git_blob_sha1": "9ce3e4cac2289f62e85b17d2dbbd15cf09a1190d"
+    },
+    {
+      "path": "4.3D Model/Metal Version/holocubic2.jpg",
+      "size": 397544,
+      "git_blob_sha1": "2d4875b0db7889e397645cd0896cdef32393a593"
+    },
+    {
+      "path": "4.3D Model/Metal Version/holocubic3.jpg",
+      "size": 274592,
+      "git_blob_sha1": "85e3b8d5a8b898485e2de35a24099b559e98181e"
+    },
+    {
+      "path": "4.3D Model/Metal Version/part1.stp",
+      "size": 321973,
+      "git_blob_sha1": "5a9e64dddcb4506bc8951e607b68a09853d2d6f3"
+    },
+    {
+      "path": "4.3D Model/Metal Version/part2.stp",
+      "size": 246166,
+      "git_blob_sha1": "ae68f791b994087677112a2987c196a8b4432e25"
+    },
+    {
+      "path": "4.3D Model/Metal Version/render.ksp",
+      "size": 10185047,
+      "git_blob_sha1": "f23519fd9ed6cbc03a6111be0e8a65f9372990b4"
+    },
+    {
+      "path": "4.3D Model/Naive Version/Lower.step",
+      "size": 122480,
+      "git_blob_sha1": "88793fa968b29d4e7bc29d6077eeda97d7545900"
+    },
+    {
+      "path": "4.3D Model/Naive Version/Upper.step",
+      "size": 131343,
+      "git_blob_sha1": "7d679034e539f8560bbb75018c1a77889fc950dc"
+    },
+    {
+      "path": "4.3D Model/Naive Version/holocubic.jpg",
+      "size": 475322,
+      "git_blob_sha1": "e6b05c66e091fd8303ffe50c3bf5eec0dbcf6a11"
+    },
+    {
+      "path": "5.Docs/Assets/logo.jpg",
+      "size": 18196,
+      "git_blob_sha1": "014d2f7453a284a0d6874fdf30a8596f655f818c"
+    },
+    {
+      "path": "5.Docs/Images/Holo.jpg",
+      "size": 678730,
+      "git_blob_sha1": "8d1081787b4aa187e530297450ed81104d7d987e"
+    },
+    {
+      "path": "5.Docs/Images/Holo1.jpg",
+      "size": 695165,
+      "git_blob_sha1": "20c0ca7c134b8a0ec86c095305c1c08f7f16846a"
+    },
+    {
+      "path": "5.Docs/Images/Holo2.jpg",
+      "size": 443081,
+      "git_blob_sha1": "9ce3e4cac2289f62e85b17d2dbbd15cf09a1190d"
+    },
+    {
+      "path": "5.Docs/Images/Holo3.png",
+      "size": 712998,
+      "git_blob_sha1": "5a47a3276daed508aa3405073184ad5d46affcf0"
+    },
+    {
+      "path": "5.Docs/Images/Holo4.jpg",
+      "size": 436583,
+      "git_blob_sha1": "3194412e98ea36f36a8be0b4c58e767324d34b84"
+    },
+    {
+      "path": "5.Docs/esp32-pico-d4_datasheet_cn.pdf",
+      "size": 2957904,
+      "git_blob_sha1": "68ab8aca2678fb75e02b2cfcf8e729452f645a7a"
+    },
+    {
+      "path": "LICENSE",
+      "size": 35149,
+      "git_blob_sha1": "f288702d2fa16d3cdf0035b15a9fcbc552cd88e7"
+    },
+    {
+      "path": "README.md",
+      "size": 7447,
+      "git_blob_sha1": "51376efcbb610af5fe3587dc5c84db1ed8783646"
+    }
+  ]
+}
