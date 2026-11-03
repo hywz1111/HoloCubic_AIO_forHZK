@@ -196,7 +196,11 @@ void tickPlayback() {
             frames->acknowledge();
             if (valid) { ++goodFrames; badFrames = 0; bytesWithoutFrame = 0; statusError = ""; }
             else ++badFrames;
-            nextFrame = millis() + 1000 / settings.fps;
+            // Include decoding time in the frame interval rather than adding
+            // another full interval after each JPEG. Never burst to catch up.
+            const uint32_t period = 1000 / settings.fps;
+            nextFrame += period;
+            if (static_cast<int32_t>(millis() - nextFrame) >= static_cast<int32_t>(period)) nextFrame = millis();
             if (badFrames < 5) return;
         }
         if (badFrames >= 5 || bytesWithoutFrame > gift::MaxFrameBytes * 4) {
