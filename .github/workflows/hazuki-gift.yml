@@ -23,6 +23,8 @@ jobs:
         run: |
           g++ -std=c++11 -Wall -Wextra -Werror -I Gift_Firmware_PIO/include Gift_Firmware_PIO/test/media_core_test.cpp -o /tmp/hazuki-media-test
           /tmp/hazuki-media-test
+          g++ -std=c++11 -Wall -Wextra -Werror -fsanitize=address,undefined -I Gift_Firmware_PIO/include Gift_Firmware_PIO/test/desk_core_test.cpp -o /tmp/hazuki-desk-test
+          /tmp/hazuki-desk-test
           python3 -m py_compile Gift_Firmware_PIO/tools/*.py
           python3 - <<'PY'
           from pathlib import Path
@@ -61,3 +63,17 @@ jobs:
           path: hazuki-gift-flash/
           if-no-files-found: error
           retention-days: 30
+  mobile-page:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install browser test dependencies
+        run: |
+          pip install playwright==1.51.0
+          python -m playwright install --with-deps chromium
+      - name: Exercise the phone page and HTTP contract
+        run: python Gift_Firmware_PIO/test/desktop_ui_test.py

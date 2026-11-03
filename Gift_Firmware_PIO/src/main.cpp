@@ -13,6 +13,7 @@
 #include "media_core.h"
 #include "control_page.h"
 #include "name_bitmap.h"
+#include "desk.h"
 
 // Original HoloCubic / forHZK pin map; no additional hardware required.
 constexpr int Backlight = 5, LedPin = 27;
@@ -56,6 +57,19 @@ String uploadName;
 const char *uploadError = "";
 uint32_t uploadBytes = 0, uploadFrames = 0, uploadTouched = 0;
 
+void tickLights() {
+    static int appliedBrightness = -1;
+    const uint8_t brightness = desk::brightness(settings.brightness);
+    if (appliedBrightness != brightness) { ledcWrite(0, 255 - 255U * brightness / 100); appliedBrightness = brightness; }
+    const uint32_t now = millis();
+    if (now - lastLed >= 80) {
+        lastLed = now;
+        const float breathing = 0.8f + 0.2f * sinf(now / 2400.0f);
+        FastLED.setBrightness(static_cast<uint8_t>(desk::ledLevel(settings.led) * 2.55f * breathing));
+        leds[0] = leds[1] = CRGB(255, 150, 47); FastLED.show();
+    }
+}
+
 String pathFor(const String &name) { return String(MovieDir) + "/" + name; }
 bool authorized() { return server.header("X-Hazuki-Request") == "1"; }
 void replyError(int code, const char *error) {
@@ -73,8 +87,9 @@ void applySettings(bool resetScreen = true) {
         screen.setRotation(settings.rotation); // bundled TFT driver supports mirrored modes 4/5
         screen.fillScreen(TFT_BLACK);
         fallbackVisible = false;
+        desk::invalidate();
     }
-    ledcWrite(0, 255 - (255U * settings.brightness / 100)); // original board is active-low
+    ledcWrite(0, 255 - (255U * desk::brightness(settings.brightness) / 100)); // active-low
     nextFrame = millis();
 }
 bool jpegOutput(int16_t x, int16_t y, uint16_t w, uint16_t h, uint16_t *data) {
@@ -103,7 +118,6 @@ bool openMovie(int index) {
         return false;
     }
     current = index;
-    if (fallbackVisible) screen.fillScreen(TFT_BLACK);
     fallbackVisible = false;
     nextFrame = millis();
     return true;
@@ -194,7 +208,7 @@ void tickPlayback() {
         if (result == gift::Frames::Ready) {
             const bool valid = frameHeaderValid() && TJpgDec.drawJpg(0, 0, frameBuffer, frames->size()) == JDR_OK;
             frames->acknowledge();
-            if (valid) { ++goodFrames; badFrames = 0; bytesWithoutFrame = 0; statusError = ""; }
+            if (valid) { ++goodFrames; badFrames = 0; bytesWithoutFrame = 0; statusError = ""; desk::videoClock(screen, true); }
             else ++badFrames;
             // Include decoding time in the frame interval rather than adding
             // another full interval after each JPEG. Never burst to catch up.
@@ -227,7 +241,7 @@ void statePage() {
         if (n) body += ',';
         body += '"'; body += movies[n].name; body += '"';
     }
-    body += "]}";
+    body += "],\"desk\":"; body += desk::stateJson(); body += '}';
     server.sendHeader("Cache-Control", "no-store");
     server.send(200, "application/json; charset=utf-8", body);
 }
@@ -260,6 +274,7 @@ void cancelUpload() {
     if (uploadFile) uploadFile.close();
     if (sdReady) SD.remove(Staging);
     uploadActive = uploadSeen = uploadEnded = false;
+    desk::invalidate();
     if (frames) frames->reset();
 }
 void uploadChunk() {
@@ -269,7 +284,7 @@ void uploadChunk() {
         uploadSeen = true; uploadEnded = false; uploadActive = true;
         uploadError = ""; uploadBytes = uploadFrames = 0; uploadTouched = millis();
         uploadName = part.filename;
-        stopMovie(); current = -1; fallbackVisible = false;
+        stopMovie(); current = -1; fallbackVisible = false; desk::invalidate();
         if (!authorized()) uploadError = "请从小舞台的管理页面操作";
         else if (!sdReady || !frames) uploadError = "请先插入可用的内存卡";
         else if (!gift::movieName(uploadName.c_str())) uploadError = "视频文件名不合适";
@@ -281,6 +296,7 @@ void uploadChunk() {
         if (!uploadFile) uploadError = "内存卡不能写入";
         showFallback();
     } else if (part.status == UPLOAD_FILE_WRITE) {
+        desk::tick(); tickLights();
         uploadTouched = millis();
         if (!uploadActive || *uploadError) return;
         if (part.currentSize > gift::MaxMovieBytes - uploadBytes) { uploadError = "视频超过 128 MiB，请先分段"; return; }
@@ -324,6 +340,7 @@ void startPhoneControl() {
     server.on("/", HTTP_GET, [] { server.send_P(200, "text/html; charset=utf-8", ControlPage); });
     server.on("/api/state", HTTP_GET, statePage);
     server.on("/api/settings", HTTP_POST, saveSettings);
+    desk::routes(server, writableRequest);
     server.on("/api/next", HTTP_POST, [] { if (writableRequest()) { paused = false; nextMovie(); ok(); } });
     server.on("/api/pause", HTTP_POST, [] {
         if (!writableRequest()) return;
@@ -370,6 +387,7 @@ void setup() {
     if (preferencesReady && preferences.getBytes("config", &stored, sizeof stored) == sizeof stored &&
         stored.magic == settings.magic && stored.brightness >= 10 && stored.brightness <= 100 &&
         stored.led <= 40 && stored.fps >= 8 && stored.fps <= 20 && stored.rotation <= 5) settings = stored;
+    desk::begin(preferencesReady ? &preferences : nullptr);
     applySettings();
     FastLED.addLeds<WS2812, LedPin, GRB>(leds, 2);
     FastLED.setBrightness(0); FastLED.show();
@@ -387,13 +405,13 @@ void loop() {
     dns.processNextRequest(); server.handleClient();
     const uint32_t now = millis();
     if (uploadSeen && now - uploadTouched > 20000) { cancelUpload(); scanMovies(false); }
-    tickPlayback();
-    if (!uploadSeen && !movieFile && frames && now - lastRetry > 15000) { lastRetry = now; scanMovies(true); }
-    if (now - lastLed >= 80) {
-        lastLed = now;
-        const float breathing = 0.8f + 0.2f * sinf(now / 2400.0f);
-        FastLED.setBrightness(static_cast<uint8_t>(settings.led * 2.55f * breathing));
-        leds[0] = leds[1] = CRGB(255, 150, 47); FastLED.show();
+    desk::tick();
+    if (!desk::draw(screen, uploadSeen)) {
+        if (desk::takeVideoResume()) { paused = false; nextFrame = now; fallbackVisible = false; }
+        tickPlayback();
+        if (!uploadSeen) desk::videoClock(screen);
     }
+    tickLights();
+    if (!uploadSeen && !movieFile && frames && now - lastRetry > 15000) { lastRetry = now; scanMovies(true); }
     delay(1);
 }
