@@ -1,0 +1,27 @@
+name: Import original HoloCubic hardware
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/import-holocubic-hardware.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Import and verify original hardware files
+        run: python3 scripts/holocubic-hardware/import_hardware.py .
+      - name: Commit hardware documentation
+        run: |
+          git diff --check
+          git add Hardware/Original_HoloCubic README.md
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "docs: import original HoloCubic hardware and enclosure designs"
+          git push origin HEAD:main
