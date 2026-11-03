@@ -1,0 +1,63 @@
+name: Hazuki gift firmware
+on:
+  push:
+    paths:
+      - 'Gift_Firmware_PIO/**'
+      - 'AIO_Firmware_PIO/lib/**'
+      - '.github/workflows/hazuki-gift.yml'
+  pull_request:
+    paths:
+      - 'Gift_Firmware_PIO/**'
+      - 'AIO_Firmware_PIO/lib/**'
+      - '.github/workflows/hazuki-gift.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check media framing and input validation
+        run: |
+          g++ -std=c++11 -Wall -Wextra -Werror -I Gift_Firmware_PIO/include Gift_Firmware_PIO/test/media_core_test.cpp -o /tmp/hazuki-media-test
+          /tmp/hazuki-media-test
+          python3 -m py_compile Gift_Firmware_PIO/tools/*.py
+          python3 - <<'PY'
+          from pathlib import Path
+          text = Path('Gift_Firmware_PIO/include/control_page.h').read_text()
+          Path('/tmp/hazuki-control.js').write_text(text.split('<script>')[1].split('</script>')[0])
+          PY
+          node --check /tmp/hazuki-control.js
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install PlatformIO
+        run: pip install platformio==6.1.18
+      - name: Compile firmware
+        run: pio run -d Gift_Firmware_PIO
+      - name: Prepare complete flash bundle
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import shutil
+          build = Path('Gift_Firmware_PIO/.pio/build/hazuki_gift')
+          framework = Path.home() / '.platformio/packages/framework-arduinoespressif32'
+          out = Path('hazuki-gift-flash')
+          out.mkdir()
+          bootloader = build / 'bootloader.bin'
+          if not bootloader.exists():
+              bootloader = framework / 'tools/sdk/bin/bootloader_dio_40m.bin'
+          for source, name in ((bootloader, 'bootloader.bin'), (build / 'partitions.bin', 'partitions.bin'),
+                               (framework / 'tools/partitions/boot_app0.bin', 'boot_app0.bin'),
+                               (build / 'firmware.bin', 'firmware.bin')):
+              shutil.copyfile(source, out / name)
+          (out / 'FLASH.txt').write_text('ESP32-PICO-D4 / 4 MiB Flash / DIO 40 MHz\nUse all four matching files on first install. Replace COM7 with your serial port.\n\npython -m esptool --chip esp32 --port COM7 --baud 460800 write_flash -z --flash_mode dio --flash_freq 40m --flash_size 4MB 0x1000 bootloader.bin 0x8000 partitions.bin 0xe000 boot_app0.bin 0x10000 firmware.bin\n\nSee Gift_Firmware_PIO/README.md and HARDWARE.md for preparation and on-device acceptance checks.\n', encoding='utf-8')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: hazuki-gift-flash
+          path: hazuki-gift-flash/
+          if-no-files-found: error
+          retention-days: 30

@@ -279,3 +279,7 @@ c文件中提取所有汉字：可以使用工程下的`Script/get_font.py`脚�
 ## 硬件设计与制作资料
 
 原始 HoloCubic 的原理图、PCB、外壳模型及芯片手册已整合到 [硬件资料目录](Hardware/Original_HoloCubic/README.md)。请先查看其中的版本适配说明，再选用设计文件制作。
+
+## 晗歌 / はづき · 静音礼物版
+
+面向接电即用的静音 MV 桌面展示，独立固件工程见 [Gift_Firmware_PIO](Gift_Firmware_PIO/README.md)。包含手机管理页面、无卡备用画面、素材转换工具，以及[硬件核对和实机验收清单](Gift_Firmware_PIO/HARDWARE.md)。Pingu 开场与正式视频素材后续制作。该工程需要实机验收后再作为礼物交付。
